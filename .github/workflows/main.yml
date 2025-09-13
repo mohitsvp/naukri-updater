@@ -1,11 +1,8 @@
 name: Naukri Profile Updater
 
 on:
-  # Schedule to run every day at 04:00 UTC (which is 9:30 AM IST)
   schedule:
     - cron: '0 4 * * *'
-  
-  # Allows you to run this workflow manually from the Actions tab for testing
   workflow_dispatch:
 
 jobs:
@@ -31,3 +28,12 @@ jobs:
         NAUKRI_USERNAME: ${{ secrets.NAUKRI_USERNAME }}
         NAUKRI_PASSWORD: ${{ secrets.NAUKRI_PASSWORD }}
       run: python main.py
+
+    # === ADD THIS NEW STEP AT THE END ===
+    - name: Upload screenshot artifact on failure
+      # This step will only run if the previous step (the script) fails
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: error-screenshot
+        path: error_screenshot.png
