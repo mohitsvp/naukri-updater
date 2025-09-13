@@ -33,7 +33,7 @@ jobs:
     - name: Upload screenshot artifact on failure
       # This step will only run if the previous step (the script) fails
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: error-screenshot
         path: error_screenshot.png
